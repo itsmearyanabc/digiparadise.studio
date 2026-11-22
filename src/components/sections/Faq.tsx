@@ -9,8 +9,8 @@ import { faqs } from "@/content/site";
 export function Faq({ items = faqs, title = "Questions, answered." }: { items?: typeof faqs; title?: string }) {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="py-24 md:py-36" aria-labelledby="faq-title">
-      <div className="container-x grid gap-12 lg:grid-cols-12">
+    <section id="faq" className="py-16 sm:py-24 lg:py-36" aria-labelledby="faq-title">
+      <div className="container-x grid gap-8 md:gap-12 lg:grid-cols-12">
         <div className="lg:col-span-4">
           <p className="eyebrow text-blue">FAQ</p>
           <SplitReveal id="faq-title" className="h2 mt-5">

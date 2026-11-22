@@ -37,12 +37,12 @@ export function Preloader() {
       window.dispatchEvent(new Event("dp:intro-done"));
         },
       });
-      tl.from(".pl-mark", { yPercent: 60, opacity: 0, duration: 0.9 })
-        .from(".pl-bowls", { scale: 0, transformOrigin: "50% 60%", duration: 0.7 }, "-=0.45")
+      tl.from(".pl-mark", { yPercent: 60, opacity: 0, duration: 0.6 })
+        .from(".pl-bowls", { scale: 0, transformOrigin: "50% 60%", duration: 0.5 }, "-=0.3")
         .from(".pl-count", { opacity: 0, duration: 0.3 }, "<")
-        .to(".pl-count-num", { innerText: 100, snap: { innerText: 1 }, duration: 0.9, ease: "power2.inOut" }, "<")
-        .to(".pl-mark", { yPercent: -40, duration: 0.5, ease: "power3.in" }, "+=0.05")
-        .to(el, { clipPath: "inset(0 0 100% 0)", duration: 0.9, ease: "expo.inOut" }, "-=0.2");
+        .to(".pl-count-num", { innerText: 100, snap: { innerText: 1 }, duration: 0.55, ease: "power2.inOut" }, "<")
+        .to(".pl-mark", { yPercent: -40, opacity: 0, duration: 0.35, ease: "power3.in" })
+        .to(el, { clipPath: "inset(0 0 100% 0)", duration: 0.7, ease: "expo.inOut" }, "-=0.2");
     }, el);
     return () => ctx.revert();
   }, []);

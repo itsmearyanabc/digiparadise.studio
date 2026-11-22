@@ -29,11 +29,11 @@ export function Process() {
           start: "top top",
           end: () => `+=${distance()}`,
           pin: true,
-          scrub: 0.8,
+          scrub: true,
           invalidateOnRefresh: true,
         },
       });
-      gsap.fromTo(".process-progress", { scaleX: 0 }, { scaleX: 1, ease: "none", scrollTrigger: { trigger: root.current, start: "top top", end: () => `+=${distance()}`, scrub: 0.8 } });
+      gsap.fromTo(".process-progress", { scaleX: 0 }, { scaleX: 1, ease: "none", scrollTrigger: { trigger: root.current, start: "top top", end: () => `+=${distance()}`, scrub: true } });
       gsap.utils.toArray<HTMLElement>(".process-card").forEach((card) => {
         gsap.from(card.querySelector(".process-num"), {
           yPercent: 60,
@@ -81,13 +81,13 @@ export function Process() {
             <article
               key={p.n}
               className={clsx(
-                "process-card relative ml-12 rounded-[28px] p-7 ring-1 ring-line lg:ml-0 lg:flex lg:h-[400px] lg:w-[380px] lg:shrink-0 lg:flex-col lg:justify-between lg:p-9",
+                "process-card relative ml-12 rounded-[24px] p-6 ring-1 ring-line lg:ml-0 lg:flex lg:h-[400px] lg:w-[380px] lg:shrink-0 lg:flex-col lg:justify-between lg:p-9",
                 cardTone[i],
               )}
             >
               <span aria-hidden className="absolute -left-[38px] top-8 size-4 rounded-full border-[3px] border-paper bg-blue lg:hidden" />
-              <p className="process-num font-display text-7xl font-extrabold leading-none tracking-tighter opacity-90 lg:text-[7rem]">{p.n}</p>
-              <div className="mt-6">
+              <p className="process-num font-display text-6xl font-extrabold leading-none tracking-tighter opacity-90 lg:text-[7rem]">{p.n}</p>
+              <div className="mt-4 lg:mt-6">
                 <h3 className="font-display text-3xl font-extrabold tracking-tight">{p.title}</h3>
                 <p className={clsx("mt-3 text-[15px] leading-relaxed", i === 5 ? "text-paper/70" : "text-ink/70")}>{p.body}</p>
               </div>

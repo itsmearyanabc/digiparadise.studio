@@ -61,7 +61,7 @@ export function Nav() {
         <div
           className={clsx(
             "transition-[background,box-shadow,backdrop-filter] duration-500",
-            scrolled || mega ? "bg-paper/85 shadow-[0_1px_0_var(--color-line)] backdrop-blur-xl" : "bg-transparent",
+            scrolled || mega ? "bg-paper/95 shadow-[0_1px_0_var(--color-line)]" : "bg-transparent",
           )}
         >
           <nav className="container-x flex h-[72px] items-center justify-between gap-6" aria-label="Main">

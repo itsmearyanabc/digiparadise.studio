@@ -64,9 +64,8 @@ export function Cursor() {
         display: enabled ? "flex" : "none",
         width: size,
         height: size,
-        background: label ? "var(--color-aqua)" : hover ? "transparent" : "var(--color-aqua)",
-        border: hover && !label ? "1.5px solid var(--color-aqua)" : "0",
-        mixBlendMode: label ? "normal" : "difference",
+        background: label ? "var(--color-aqua)" : hover ? "rgba(21,255,236,.18)" : "var(--color-aqua)",
+        border: label ? "0" : "1.5px solid var(--color-ink)",
         transition: "width .35s var(--ease-out-expo), height .35s var(--ease-out-expo), background .2s, border .2s",
       }}
     >

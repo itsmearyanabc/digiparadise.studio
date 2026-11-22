@@ -37,7 +37,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   return (
     <>
       <section className="relative overflow-hidden pt-[140px] pb-20 md:pb-28">
-        <div aria-hidden className="pointer-events-none absolute -right-32 top-10 -z-10 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(21,255,236,.4),rgba(31,59,255,.15)_45%,transparent_70%)] blur-2xl" />
+        <div aria-hidden className="pointer-events-none absolute -right-32 top-10 -z-10 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(21,255,236,.4),rgba(31,59,255,.15)_45%,transparent_68%)]" />
         <div className="container-x">
           <nav aria-label="Breadcrumb" className="eyebrow flex items-center gap-2 text-muted">
             <Link href="/" className="hover:text-ink">Home</Link>
@@ -59,7 +59,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      <section className="border-t border-line py-20 md:py-28" aria-labelledby="overview">
+      <section className="border-t border-line py-14 sm:py-20 lg:py-28" aria-labelledby="overview">
         <div className="container-x grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <p className="eyebrow text-blue">Overview</p>
@@ -75,7 +75,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      <section className="bg-paper-2/60 py-20 md:py-28" aria-labelledby="what-we-do">
+      <section className="bg-paper-2/60 py-14 sm:py-20 lg:py-28" aria-labelledby="what-we-do">
         <div className="container-x">
           <p className="eyebrow text-blue">What we do</p>
           <SplitReveal id="what-we-do" className="h2 mt-5">Inside the service.</SplitReveal>
@@ -103,7 +103,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      <section className="py-20 md:py-28" aria-labelledby="deliverables">
+      <section className="py-14 sm:py-20 lg:py-28" aria-labelledby="deliverables">
         <div className="container-x">
           <div className="rounded-[32px] bg-ink p-8 text-paper md:p-14">
             <p className="eyebrow text-aqua">Typical deliverables</p>
@@ -133,7 +133,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
       <Process />
 
-      <section className="py-20 md:py-28" aria-labelledby="more-services">
+      <section className="py-14 sm:py-20 lg:py-28" aria-labelledby="more-services">
         <div className="container-x">
           <h2 id="more-services" className="eyebrow text-muted">More services</h2>
           <ul className="mt-6 divide-y divide-line border-y border-line">

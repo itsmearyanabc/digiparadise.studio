@@ -43,7 +43,7 @@ export function Hero() {
         gsap.to(".hero-aperture", {
           rotate: 360,
           ease: "none",
-          scrollTrigger: { trigger: el, start: "top top", end: "bottom top", scrub: 0.6 },
+          scrollTrigger: { trigger: el, start: "top top", end: "bottom top", scrub: true },
         });
         // Cards drift apart while scrolling out
         gsap.utils.toArray<HTMLElement>(".hero-card-wrap").forEach((c, i) => {
@@ -56,35 +56,53 @@ export function Hero() {
       }
     }, el);
 
-    // Pointer parallax on the card stack
-    const stack = el.querySelector<HTMLElement>(".hero-stack");
-    const fine = window.matchMedia("(pointer: fine)").matches;
-    const onMove = (e: PointerEvent) => {
-      if (!stack || reduce || !fine) return;
-      const r = el.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width - 0.5;
-      const py = (e.clientY - r.top) / r.height - 0.5;
-      stack.querySelectorAll<HTMLElement>(".hero-card").forEach((c, i) => {
-        const depth = (i + 1) * 10;
-        gsap.to(c, { x: px * depth * 2, y: py * depth, rotateY: px * 8, rotateX: -py * 8, duration: 1, ease: "power3.out" });
-      });
-      gsap.to(".hero-glow", { x: px * 120, y: py * 80, duration: 1.4, ease: "power3.out" });
-    };
-    el.addEventListener("pointermove", onMove);
+    // Pointer parallax on the card stack (desktop only). quickTo reuses one tween per
+    // property instead of creating new tweens on every mousemove.
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    let onMove: ((e: PointerEvent) => void) | null = null;
+    if (fine && !reduce) {
+      const cards = gsap.utils.toArray<HTMLElement>(".hero-card", el);
+      const movers = cards.map((c) => ({
+        x: gsap.quickTo(c, "x", { duration: 0.9, ease: "power3.out" }),
+        y: gsap.quickTo(c, "y", { duration: 0.9, ease: "power3.out" }),
+        ry: gsap.quickTo(c, "rotateY", { duration: 0.9, ease: "power3.out" }),
+        rx: gsap.quickTo(c, "rotateX", { duration: 0.9, ease: "power3.out" }),
+      }));
+      const glow = el.querySelector(".hero-glow");
+      const gx = gsap.quickTo(glow, "x", { duration: 1.4, ease: "power3.out" });
+      const gy = gsap.quickTo(glow, "y", { duration: 1.4, ease: "power3.out" });
+      let r = el.getBoundingClientRect();
+      const measure = () => (r = el.getBoundingClientRect());
+      el.addEventListener("pointerenter", measure);
+      onMove = (e: PointerEvent) => {
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        movers.forEach((m, i) => {
+          const depth = (i + 1) * 10;
+          m.x(px * depth * 2);
+          m.y(py * depth);
+          m.ry(px * 8);
+          m.rx(-py * 8);
+        });
+        gx(px * 120);
+        gy(py * 80);
+      };
+      el.addEventListener("pointermove", onMove, { passive: true });
+    }
     return () => {
-      el.removeEventListener("pointermove", onMove);
+      if (onMove) el.removeEventListener("pointermove", onMove);
       ctx.revert();
     };
   }, []);
 
   return (
-    <section ref={root} className="relative overflow-hidden pt-[120px] pb-20 md:pt-[140px] md:pb-28" aria-labelledby="hero-title">
+    <section ref={root} className="relative overflow-hidden pt-[112px] pb-10 md:pt-[140px] md:pb-28" aria-labelledby="hero-title">
       {/* soft brand glow */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="hero-glow absolute right-[-10%] top-[8%] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(21,255,236,.45),rgba(31,59,255,.18)_45%,transparent_70%)] blur-2xl" />
+        <div className="hero-glow absolute right-[-10%] top-[8%] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(21,255,236,.45),rgba(31,59,255,.16)_42%,transparent_68%)]" />
       </div>
 
-      <div className="container-x grid items-center gap-14 lg:grid-cols-[1.15fr_1fr]">
+      <div className="container-x grid items-center gap-4 sm:gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
         <div>
           <p className="hero-fade eyebrow mb-6 flex items-center gap-3 text-muted">
             <span className="inline-block size-2 rounded-full bg-aqua shadow-[0_0_0_4px_rgba(21,255,236,.25)]" />
@@ -127,7 +145,7 @@ export function Hero() {
             </Button>
           </div>
 
-          <div className="hero-fade mt-12 flex items-center gap-4">
+          <div className="hero-fade mt-10 flex items-center gap-4 md:mt-12">
             <div className="flex -space-x-2">
               {["MK", "VM", "VB", "AT", "SK"].map((t, i) => (
                 <span
@@ -149,7 +167,7 @@ export function Hero() {
         </div>
 
         {/* Reel stack */}
-        <div className="hero-stack relative mx-auto h-[400px] w-full max-w-[460px] scale-[0.82] [perspective:1200px] sm:h-[520px] sm:scale-100">
+        <div className="hero-stack relative mx-auto h-[350px] w-full max-w-[460px] scale-[0.78] [perspective:1200px] sm:h-[520px] sm:scale-100">
           {reels.map((r) => (
             <div
               key={r.id}

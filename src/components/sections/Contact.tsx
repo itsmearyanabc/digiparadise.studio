@@ -46,10 +46,10 @@ export function Contact() {
 
   return (
     <section id="contact" className="relative overflow-hidden bg-ink py-24 text-paper md:py-36" aria-labelledby="contact-title">
-      <div aria-hidden className="pointer-events-none absolute -left-40 top-20 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(31,59,255,.45),transparent_65%)] blur-3xl" />
-      <div aria-hidden className="pointer-events-none absolute -right-40 bottom-0 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(21,255,236,.25),transparent_65%)] blur-3xl" />
+      <div aria-hidden className="pointer-events-none absolute -left-40 top-20 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(31,59,255,.4),transparent_62%)]" />
+      <div aria-hidden className="pointer-events-none absolute -right-40 bottom-0 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(21,255,236,.22),transparent_62%)]" />
 
-      <div className="container-x relative grid gap-16 lg:grid-cols-12">
+      <div className="container-x relative grid gap-10 md:gap-16 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <p className="eyebrow text-aqua">Start a project</p>
           <SplitReveal id="contact-title" className="display mt-5 text-[clamp(3rem,7vw,6.2rem)]">
@@ -89,7 +89,7 @@ export function Contact() {
                 noValidate
                 onSubmit={onSubmit}
                 exit={{ opacity: 0, y: -20 }}
-                className="rounded-[32px] bg-paper p-6 text-ink md:p-10"
+                className="rounded-[26px] bg-paper p-5 text-ink sm:p-6 md:rounded-[32px] md:p-10"
               >
                 <fieldset>
                   <legend className="eyebrow text-muted">I am</legend>

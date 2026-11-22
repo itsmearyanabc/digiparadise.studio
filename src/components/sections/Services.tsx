@@ -21,7 +21,7 @@ const spans = ["lg:col-span-7", "lg:col-span-5", "lg:col-span-4", "lg:col-span-4
 
 export function Services() {
   return (
-    <section id="services" className="bg-paper-2/60 py-24 md:py-36" aria-labelledby="services-title">
+    <section id="services" className="bg-paper-2/60 py-16 sm:py-24 lg:py-36" aria-labelledby="services-title">
       <div className="container-x">
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <div>
@@ -37,7 +37,7 @@ export function Services() {
           </Reveal>
         </div>
 
-        <ul className="mt-14 grid gap-4 lg:grid-cols-12">
+        <ul className="mt-10 grid gap-3 md:mt-14 md:gap-4 lg:grid-cols-12">
           {services.map((s, i) => (
             <Reveal as="li" key={s.slug} delay={(i % 3) * 0.08} className={clsx(spans[i])}>
               <ServiceCard s={s} wide={i === 0 || i === 5} />
@@ -74,7 +74,7 @@ function ServiceCard({ s, wide }: { s: Service; wide?: boolean }) {
           my.set(0.5);
         }}
         className={clsx(
-          "group relative flex h-full min-h-[300px] flex-col justify-between overflow-hidden rounded-[28px] p-7 ring-1 ring-line transition-colors duration-500 ease-out-expo md:p-9",
+          "group relative flex h-full min-h-[220px] flex-col justify-between overflow-hidden rounded-[24px] p-6 ring-1 ring-line transition-colors duration-500 ease-out-expo md:min-h-[300px] md:rounded-[28px] md:p-9",
           a.card,
         )}
       >
@@ -82,19 +82,19 @@ function ServiceCard({ s, wide }: { s: Service; wide?: boolean }) {
           <span className={clsx("rounded-full px-3 py-1 font-label text-[11px] font-bold tracking-wider", a.chip, "group-hover:bg-ink/10 group-hover:text-current")}>
             {s.index}
           </span>
-          <span className="grid size-12 place-items-center rounded-full bg-ink text-paper transition-transform duration-500 ease-out-expo group-hover:rotate-45 group-hover:scale-110">
+          <span className="grid size-11 shrink-0 place-items-center rounded-full bg-ink text-paper md:size-12 transition-transform duration-500 ease-out-expo group-hover:rotate-45 group-hover:scale-110">
             <ArrowUpRight className="size-5 -rotate-45 transition-transform duration-500 group-hover:rotate-0" />
           </span>
         </div>
 
         <div className={clsx(wide && "lg:grid lg:grid-cols-[1.2fr_1fr] lg:items-end lg:gap-10")}>
           <div>
-            <h3 className="mt-10 font-display text-3xl font-extrabold leading-[1.02] tracking-tight md:text-[2.4rem]">{s.title}</h3>
+            <h3 className="mt-6 font-display text-[1.75rem] font-extrabold leading-[1.02] tracking-tight md:mt-10 md:text-[2.4rem]">{s.title}</h3>
             <p className={clsx("mt-4 max-w-md text-[15px] leading-relaxed transition-colors duration-500", a.sub)}>{s.pitch}</p>
           </div>
           <ul className={clsx("mt-6 flex flex-wrap gap-2", !wide && "max-h-0 overflow-hidden opacity-0 transition-all duration-700 ease-out-expo group-hover:max-h-40 group-hover:opacity-100 max-lg:max-h-none max-lg:opacity-100")}>
-            {s.deliverables.slice(0, wide ? 6 : 4).map((d) => (
-              <li key={d} className="rounded-full border border-current/15 px-3 py-1 text-xs font-medium">
+            {s.deliverables.slice(0, wide ? 6 : 4).map((d, di) => (
+              <li key={d} className={clsx("rounded-full border border-current/15 px-3 py-1 text-xs font-medium", di >= 3 && "max-lg:hidden")}>
                 {d}
               </li>
             ))}

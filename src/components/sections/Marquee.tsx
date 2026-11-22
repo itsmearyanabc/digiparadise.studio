@@ -8,46 +8,58 @@ import { marqueeNames } from "@/content/site";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/** Two rows of names moving in opposite directions; scroll velocity speeds them up and flips direction. */
+/**
+ * Two rows of names moving in opposite directions. Scroll velocity speeds them up and
+ * flips direction. One ticker callback eases the speed (no tweens created per scroll
+ * event), and the rows pause entirely while the section is off-screen.
+ */
 export function Marquee() {
   const root = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const rows = root.current!.querySelectorAll<HTMLElement>("[data-row]");
-    const tweens = Array.from(rows).map((row, i) => {
-      const t = gsap.fromTo(
-        row,
-        { xPercent: i % 2 ? -50 : 0 },
-        { xPercent: i % 2 ? 0 : -50, duration: 38, ease: "none", repeat: -1 },
-      );
-      return t;
-    });
+    const el = root.current!;
+    const rows = el.querySelectorAll<HTMLElement>("[data-row]");
+    const tweens = Array.from(rows).map((row, i) =>
+      gsap.fromTo(row, { xPercent: i % 2 ? -50 : 0 }, { xPercent: i % 2 ? 0 : -50, duration: 38, ease: "none", repeat: -1 }),
+    );
+
     let dir = 1;
-    let settle: gsap.core.Tween | null = null;
+    let boost = 0; // extra speed from scrolling, decays every frame
+    let hover = false;
+    let current = 1;
+
     const st = ScrollTrigger.create({
-      trigger: root.current,
+      trigger: el,
       start: "top bottom",
       end: "bottom top",
+      onToggle: (self) => tweens.forEach((t) => (self.isActive ? t.resume() : t.pause())),
       onUpdate: (self) => {
         const v = self.getVelocity();
         if (Math.abs(v) > 10) dir = v > 0 ? 1 : -1;
-        const boost = 1 + Math.min(Math.abs(v) / 400, 5);
-        tweens.forEach((t) => gsap.to(t, { timeScale: boost * dir, duration: 0.3, overwrite: true }));
-        settle?.kill();
-        settle = gsap.delayedCall(0.35, () => tweens.forEach((t) => gsap.to(t, { timeScale: dir, duration: 1.2, overwrite: true })));
+        boost = Math.max(boost, Math.min(Math.abs(v) / 300, 6));
       },
     });
-    const pause = () => tweens.forEach((t) => gsap.to(t, { timeScale: 0.15, duration: 0.6, overwrite: true }));
-    const resume = () => tweens.forEach((t) => gsap.to(t, { timeScale: dir, duration: 0.6, overwrite: true }));
-    const el = root.current!;
-    el.addEventListener("pointerenter", pause);
-    el.addEventListener("pointerleave", resume);
+
+    const tick = () => {
+      if (!st.isActive) return;
+      boost *= 0.9;
+      const target = (hover ? 0.15 : 1 + boost) * dir;
+      current += (target - current) * 0.12;
+      tweens.forEach((t) => t.timeScale(current));
+    };
+    gsap.ticker.add(tick);
+
+    const enter = () => (hover = true);
+    const leave = () => (hover = false);
+    el.addEventListener("pointerenter", enter);
+    el.addEventListener("pointerleave", leave);
     return () => {
+      gsap.ticker.remove(tick);
       st.kill();
       tweens.forEach((t) => t.kill());
-      el.removeEventListener("pointerenter", pause);
-      el.removeEventListener("pointerleave", resume);
+      el.removeEventListener("pointerenter", enter);
+      el.removeEventListener("pointerleave", leave);
     };
   }, []);
 
@@ -62,22 +74,22 @@ export function Marquee() {
         </h2>
         <span className="hidden h-px flex-1 bg-line md:block" />
       </div>
-      <div className="space-y-4 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]">
+      <div className="space-y-3 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)] md:space-y-4">
         {rowsData.map((names, i) => (
-          <div key={i} data-row className="flex w-max">
+          <div key={i} data-row className="flex w-max will-change-transform">
             {[0, 1].map((dup) => (
               <ul key={dup} className="flex shrink-0 items-center" aria-hidden={dup === 1 || undefined}>
                 {names.map((n) => (
                   <li key={n} className="flex items-center">
                     <span
                       className={
-                        "px-6 font-display text-4xl font-extrabold tracking-tight transition-colors duration-300 hover:text-blue md:text-6xl " +
-                        (i % 2 ? "text-transparent [-webkit-text-stroke:1.5px_var(--color-ink)] hover:[-webkit-text-stroke:1.5px_var(--color-blue)]" : "text-ink")
+                        "px-4 font-display text-3xl font-extrabold tracking-tight transition-colors duration-300 hover:text-blue md:px-6 md:text-6xl " +
+                        (i % 2 ? "text-transparent [-webkit-text-stroke:1.2px_var(--color-ink)] hover:[-webkit-text-stroke:1.2px_var(--color-blue)]" : "text-ink")
                       }
                     >
                       {n}
                     </span>
-                    <Aperture className={"size-7 md:size-9 " + (i % 2 ? "text-blue" : "text-aqua-deep")} />
+                    <Aperture className={"size-6 md:size-9 " + (i % 2 ? "text-blue" : "text-aqua-deep")} />
                   </li>
                 ))}
               </ul>

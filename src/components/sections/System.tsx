@@ -30,7 +30,7 @@ export function System() {
   }, [hovering, inView]);
 
   return (
-    <section className="py-24 md:py-36" aria-labelledby="system-title">
+    <section className="py-16 sm:py-24 lg:py-36" aria-labelledby="system-title">
       <div className="container-x grid items-center gap-16 lg:grid-cols-2">
         <div>
           <p className="eyebrow text-blue">How we think</p>
@@ -43,7 +43,7 @@ export function System() {
               audience, in the right format, on the right platform. Every piece feeds the next.
             </p>
           </Reveal>
-          <ul className="mt-10 grid max-w-lg grid-cols-2 gap-x-6 gap-y-3">
+          <ul className="mt-8 grid max-w-lg grid-cols-2 gap-x-6 gap-y-1 md:mt-10 md:gap-y-3">
             {nodes.map((n, i) => (
               <li key={n.k}>
                 <button
@@ -75,10 +75,24 @@ export function System() {
               </li>
             ))}
           </ul>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={active}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3 }}
+              className="mt-6 min-h-[3em] text-[15px] leading-relaxed text-ink/70 sm:hidden"
+              aria-live="polite"
+            >
+              <strong className="text-ink">{nodes[active].k}:</strong> {nodes[active].d}
+            </motion.p>
+          </AnimatePresence>
         </div>
 
         {/* Engine */}
-        <div ref={ref} className="relative mx-auto aspect-square w-full max-w-[540px]">
+        {/* Mobile: the active step's description sits under the list instead of inside the circle */}
+        <div ref={ref} className="relative mx-auto -mt-6 aspect-square w-full max-w-[340px] sm:mt-0 sm:max-w-[540px]">
           <div className="absolute inset-[6%] rounded-full border border-dashed border-ink/15" />
           <motion.div
             className="absolute inset-[6%] rounded-full"
@@ -98,8 +112,8 @@ export function System() {
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <p className="mt-4 font-display text-2xl font-extrabold tracking-tight text-aqua md:text-3xl">{nodes[active].k}</p>
-                  <p className="mt-2 text-xs leading-snug text-paper/70 md:text-sm">{nodes[active].d}</p>
+                  <p className="mt-3 font-display text-2xl font-extrabold tracking-tight text-aqua sm:mt-4 md:text-3xl">{nodes[active].k}</p>
+                  <p className="mt-2 hidden text-sm leading-snug text-paper/70 sm:block">{nodes[active].d}</p>
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -119,7 +133,7 @@ export function System() {
                 onMouseLeave={() => setHovering(false)}
                 onClick={() => setActive(i)}
                 className={clsx(
-                  "absolute -translate-x-1/2 -translate-y-1/2 rounded-full px-4 py-2 font-label text-xs font-bold uppercase tracking-wider shadow-sm transition-all duration-500 ease-out-expo md:text-[13px]",
+                  "absolute -translate-x-1/2 -translate-y-1/2 rounded-full px-3 py-1.5 font-label text-[10px] font-bold uppercase tracking-wider shadow-sm transition-all duration-500 ease-out-expo sm:px-4 sm:py-2 sm:text-xs md:text-[13px]",
                   active === i ? "scale-110 bg-aqua text-ink shadow-[0_10px_30px_-8px_rgba(21,255,236,.8)]" : "bg-white text-ink ring-1 ring-line hover:ring-ink",
                 )}
                 style={{ left: `${x}%`, top: `${y}%` }}

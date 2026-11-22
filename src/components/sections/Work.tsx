@@ -15,6 +15,7 @@ type Tab = (typeof tabs)[number];
 // Mostly dark cards with an occasional brand accent, so the grid reads calm, not rainbow.
 const tones = ["bg-ink-2 text-paper", "bg-aqua text-ink", "bg-ink-2 text-paper", "bg-ink-2 text-paper", "bg-sun text-ink", "bg-ink-2 text-paper", "bg-blue text-paper", "bg-ink-2 text-paper"];
 const LIMIT = 12;
+const MOBILE_LIMIT = 8;
 
 export function Work() {
   const [tab, setTab] = useState<Tab>("All");
@@ -34,7 +35,7 @@ export function Work() {
           </div>
 
           <LayoutGroup>
-            <div role="tablist" aria-label="Filter work" className="flex flex-wrap gap-1 rounded-full bg-paper/5 p-1.5 ring-1 ring-paper/10">
+            <div role="tablist" aria-label="Filter work" className="no-scrollbar -mx-4 flex gap-1 overflow-x-auto px-4 sm:mx-0 sm:px-0"><div className="flex shrink-0 gap-1 rounded-full bg-paper/5 p-1.5 ring-1 ring-paper/10">
               {tabs.map((t) => (
                 <button
                   key={t}
@@ -44,7 +45,7 @@ export function Work() {
                     setTab(t);
                     setExpanded(false);
                   }}
-                  className={clsx("relative rounded-full px-4 py-2 text-sm font-medium transition-colors", tab === t ? "text-ink" : "text-paper/70 hover:text-paper")}
+                  className={clsx("relative whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors", tab === t ? "text-ink" : "text-paper/70 hover:text-paper")}
                 >
                   {tab === t && (
                     <motion.span layoutId="work-tab" className="absolute inset-0 rounded-full bg-aqua" transition={{ type: "spring", stiffness: 400, damping: 34 }} />
@@ -52,11 +53,11 @@ export function Work() {
                   <span className="relative">{t}</span>
                 </button>
               ))}
-            </div>
+            </div></div>
           </LayoutGroup>
         </div>
 
-        <motion.ul layout className="mt-14 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+        <motion.ul layout className="mt-10 grid grid-cols-2 gap-2.5 md:mt-14 md:grid-cols-3 md:gap-3 lg:grid-cols-4">
           <AnimatePresence mode="popLayout">
             {items.map((w, i) => (
               <motion.li
@@ -66,6 +67,7 @@ export function Work() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.92 }}
                 transition={{ duration: 0.5, delay: Math.min(i, 12) * 0.025, ease: [0.16, 1, 0.3, 1] }}
+                className={clsx(!expanded && i >= MOBILE_LIMIT && "max-md:hidden")}
               >
                 <WorkCard w={w} i={i} />
               </motion.li>
@@ -73,8 +75,8 @@ export function Work() {
           </AnimatePresence>
         </motion.ul>
 
-        {all.length > LIMIT && (
-          <div className="mt-8 flex justify-center">
+        {all.length > MOBILE_LIMIT && (
+          <div className={clsx("mt-8 flex justify-center", all.length <= LIMIT && "md:hidden")}>
             <button
               onClick={() => setExpanded((e) => !e)}
               className="rounded-full px-6 py-3 text-sm font-medium text-paper/80 ring-1 ring-paper/20 transition-all hover:bg-paper hover:text-ink"
@@ -104,7 +106,7 @@ function WorkCard({ w, i }: { w: WorkItem; i: number }) {
       rel="noopener noreferrer"
       data-cursor={isVideo ? "Play" : "View"}
       className={clsx(
-        "group relative flex aspect-[4/5] flex-col justify-between overflow-hidden rounded-3xl p-5 ring-1 ring-paper/10 transition-transform duration-700 ease-out-expo hover:-translate-y-1",
+        "group relative flex aspect-[4/5] flex-col justify-between overflow-hidden rounded-[20px] p-3.5 ring-1 sm:rounded-3xl sm:p-5 ring-paper/10 transition-transform duration-700 ease-out-expo hover:-translate-y-1",
         isVideo ? "bg-ink-2 text-paper" : tones[i % tones.length],
       )}
     >
@@ -142,8 +144,8 @@ function WorkCard({ w, i }: { w: WorkItem; i: number }) {
         </span>
       </div>
       <div className="relative">
-        <p className="font-display text-2xl font-extrabold leading-[1.02] tracking-tight md:text-3xl">{w.name}</p>
-        {w.note && <p className="mt-2 text-sm opacity-70">{w.note}</p>}
+        <p className="font-display text-xl font-extrabold leading-[1.02] tracking-tight sm:text-2xl md:text-3xl">{w.name}</p>
+        {w.note && <p className="mt-1.5 text-xs opacity-70 sm:mt-2 sm:text-sm">{w.note}</p>}
       </div>
     </a>
   );

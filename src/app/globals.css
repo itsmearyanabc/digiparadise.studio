@@ -45,6 +45,7 @@
     font-family: var(--font-sans);
     overflow-x: clip;
   }
+  * { -webkit-tap-highlight-color: transparent; }
   ::selection { background: var(--color-aqua); color: var(--color-ink); }
 
   :focus-visible {
@@ -109,9 +110,13 @@
 html.intro-seen .preloader { display: none; }
 html:not(.js) .preloader { display: none; }
 
+/* Hide scrollbars on horizontal swipe rows */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
 /* Split-text reveal: words start masked below the line */
 .split-word { display: inline-block; overflow: clip; vertical-align: top; padding-bottom: 0.08em; margin-bottom: -0.08em; }
-.split-word > span { display: inline-block; will-change: transform; }
+.split-word > span { display: inline-block; }
 /* Pre-hide words only when JS is running and motion is allowed, so there is no flash before GSAP takes over */
 @media (prefers-reduced-motion: no-preference) {
   .js [data-split] .split-word > span { transform: translateY(110%); }

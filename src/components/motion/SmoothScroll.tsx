@@ -16,10 +16,13 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    // lerp-based smoothing follows the wheel closely (no long "floaty" tail).
+    // Touch devices keep native scrolling (syncTouch off), which is the smoothest on phones.
     const instance = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.14,
+      wheelMultiplier: 1,
       smoothWheel: true,
+      syncTouch: false,
     });
     instance.on("scroll", ScrollTrigger.update);
     const tick = (time: number) => instance.raf(time * 1000);
@@ -34,7 +37,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       const target = document.querySelector(a.getAttribute("href")!);
       if (!target) return;
       e.preventDefault();
-      instance.scrollTo(target as HTMLElement, { offset: -80 });
+      instance.scrollTo(target as HTMLElement, { offset: -72, duration: 1.1 });
     };
     document.addEventListener("click", onClick);
 

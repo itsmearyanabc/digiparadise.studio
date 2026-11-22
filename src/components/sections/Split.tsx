@@ -35,7 +35,7 @@ const columns = [
 
 export function Split() {
   return (
-    <section className="py-24 md:py-36" aria-labelledby="split-title">
+    <section className="py-16 sm:py-24 lg:py-36" aria-labelledby="split-title">
       <div className="container-x">
         <SplitReveal id="split-title" className="h2 text-center">
           Brand, or founder?
@@ -44,12 +44,12 @@ export function Split() {
           <p className="mx-auto mt-5 max-w-xl text-center text-lg text-ink/65">Two paths, one studio. Pick yours.</p>
         </Reveal>
 
-        <div className="mt-14 grid gap-5 lg:grid-cols-2">
+        <div className="mt-10 grid gap-4 md:mt-14 md:gap-5 lg:grid-cols-2">
           {columns.map((c, ci) => (
             <Reveal key={c.title} delay={ci * 0.12}>
               <article
                 className={clsx(
-                  "group relative h-full overflow-hidden rounded-[32px] p-8 transition-transform duration-700 ease-out-expo hover:-translate-y-1.5 md:p-12",
+                  "group relative h-full overflow-hidden rounded-[26px] p-6 transition-transform duration-700 ease-out-expo hover:-translate-y-1.5 sm:p-8 md:rounded-[32px] md:p-12",
                   c.theme === "ink" ? "bg-ink text-paper" : "bg-sun text-ink",
                 )}
               >
@@ -62,15 +62,15 @@ export function Split() {
                   )}
                 </div>
 
-                <h3 className="relative font-display text-4xl font-extrabold leading-[0.98] tracking-tight md:text-6xl">{c.title}</h3>
+                <h3 className="relative font-display text-[2.3rem] font-extrabold leading-[0.98] tracking-tight md:text-6xl">{c.title}</h3>
                 <p className={clsx("relative mt-5 max-w-md text-[17px] leading-relaxed", c.theme === "ink" ? "text-paper/70" : "text-ink/75")}>{c.body}</p>
 
-                <ol className="relative mt-10 space-y-0">
+                <ol className="relative mt-7 space-y-0 md:mt-10">
                   {c.steps.map(([t, d], i) => (
                     <li
                       key={t}
                       className={clsx(
-                        "flex gap-5 border-t py-5",
+                        "flex gap-4 border-t py-4 md:gap-5 md:py-5",
                         c.theme === "ink" ? "border-paper/15" : "border-ink/15",
                       )}
                     >
