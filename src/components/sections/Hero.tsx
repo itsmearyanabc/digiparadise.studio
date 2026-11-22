@@ -11,9 +11,9 @@ import { Button } from "@/components/ui/Button";
 gsap.registerPlugin(ScrollTrigger);
 
 const reels = [
-  { name: "Mary Kom", tag: "Podcast", id: "_xlO4ugYVuk", href: "https://youtu.be/_xlO4ugYVuk", rot: -9, x: -38, y: 40, z: 1 },
-  { name: "Varun Mayya", tag: "Podcast", id: "ObXOm9YqnBk", href: "https://youtu.be/ObXOm9YqnBk", rot: 4, x: 30, y: -10, z: 3 },
-  { name: "KK Creates", tag: "Long-form", id: "RncL-lkUpU4", href: "https://youtu.be/RncL-lkUpU4", rot: 12, x: 92, y: 70, z: 2 },
+  { name: "Mary Kom", tag: "Podcast", id: "_xlO4ugYVuk", href: "https://youtu.be/_xlO4ugYVuk", rot: -6, x: -56, y: -128, z: 1 },
+  { name: "Varun Mayya", tag: "Podcast", id: "ObXOm9YqnBk", href: "https://youtu.be/ObXOm9YqnBk", rot: 2, x: 10, y: 0, z: 3 },
+  { name: "KK Creates", tag: "Long-form", id: "RncL-lkUpU4", href: "https://youtu.be/RncL-lkUpU4", rot: 6, x: 60, y: 128, z: 2 },
 ];
 
 export function Hero() {
@@ -145,29 +145,22 @@ export function Hero() {
             </Button>
           </div>
 
-          <div className="hero-fade mt-10 flex items-center gap-4 md:mt-12">
-            <div className="flex -space-x-2">
-              {["MK", "VM", "VB", "AT", "SK"].map((t, i) => (
-                <span
-                  key={t}
-                  className="grid size-10 place-items-center rounded-full border-2 border-paper font-label text-[11px] font-bold"
-                  style={{ background: ["#0a0b0d", "#1f3bff", "#15ffec", "#ffd23f", "#ecebe4"][i], color: i < 2 ? "#f6f5f0" : "#0a0b0d" }}
-                  aria-hidden
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-            <p className="text-sm leading-snug text-muted">
-              <strong className="font-semibold text-ink">30+ creators, brands &amp; personal brands</strong>
-              <br />
-              in India and Australia
-            </p>
-          </div>
+          <dl className="hero-fade mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-line pt-6 md:mt-12">
+            {[
+              ["30+", "Creators & brands"],
+              ["2", "Countries served"],
+              ["6", "Core services"],
+            ].map(([n, l]) => (
+              <div key={l} className="flex flex-col">
+                <dt className="order-2 mt-1 text-xs leading-snug text-muted md:text-sm">{l}</dt>
+                <dd className="order-1 font-display text-3xl font-extrabold tracking-tight md:text-4xl">{n}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
 
         {/* Reel stack */}
-        <div className="hero-stack relative mx-auto h-[350px] w-full max-w-[460px] scale-[0.78] [perspective:1200px] sm:h-[520px] sm:scale-100">
+        <div className="hero-stack relative mx-auto -my-6 h-[400px] w-full max-w-[520px] scale-[0.74] [perspective:1200px] sm:my-0 sm:h-[500px] sm:scale-100">
           {reels.map((r) => (
             <div
               key={r.id}
@@ -180,19 +173,19 @@ export function Hero() {
                 rel="noopener noreferrer"
                 data-cursor="Play"
                 aria-label={`Watch ${r.name} ${r.tag.toLowerCase()} edited by Digiparadise`}
-                className="hero-card group relative block h-[340px] w-[200px] overflow-hidden rounded-[28px] bg-ink shadow-[0_30px_80px_-20px_rgba(10,11,13,.45)] ring-1 ring-ink/10 [transform-style:preserve-3d] sm:h-[400px] sm:w-[230px]"
+                className="hero-card group relative block aspect-video w-[340px] overflow-hidden rounded-[22px] bg-ink shadow-[0_30px_70px_-24px_rgba(10,11,13,.55)] ring-1 ring-ink/10 [transform-style:preserve-3d] sm:w-[400px]"
                 style={{ rotate: `${r.rot}deg` }}
               >
                 <Image
-                  src={`https://i.ytimg.com/vi/${r.id}/hqdefault.jpg`}
+                  src={`https://i.ytimg.com/vi/${r.id}/hq720.jpg`}
                   alt=""
                   fill
-                  sizes="230px"
+                  sizes="400px"
                   priority
-                  className="object-cover opacity-90 transition-transform duration-700 ease-out-expo group-hover:scale-110"
+                  className="object-cover transition-transform duration-700 ease-out-expo group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/10 to-transparent" />
-                <div className="absolute left-4 right-4 top-4 flex items-center justify-between">
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/0 to-transparent" />
+                <div className="absolute left-3.5 right-3.5 top-3.5 flex items-center justify-between">
                   <span className="rounded-full bg-paper/90 px-2.5 py-1 font-label text-[10px] font-bold uppercase tracking-wider text-ink">
                     {r.tag}
                   </span>
@@ -202,9 +195,9 @@ export function Hero() {
                     </svg>
                   </span>
                 </div>
-                <div className="absolute inset-x-4 bottom-4 text-paper">
-                  <p className="font-display text-2xl font-extrabold leading-none tracking-tight">{r.name}</p>
-                  <div className="mt-3 h-1 overflow-hidden rounded-full bg-paper/20">
+                <div className="absolute inset-x-4 bottom-3.5 text-paper">
+                  <p className="font-display text-xl font-extrabold leading-none tracking-tight sm:text-2xl">{r.name}</p>
+                  <div className="mt-2.5 h-1 overflow-hidden rounded-full bg-paper/20">
                     <div className="h-full w-1/3 rounded-full bg-aqua transition-[width] duration-[1.6s] ease-out-expo group-hover:w-full" />
                   </div>
                 </div>
@@ -213,13 +206,13 @@ export function Hero() {
           ))}
 
           {/* floating stickers */}
-          <div className="hero-fade absolute -left-2 top-6 z-10 rotate-[-6deg] rounded-2xl bg-sun px-4 py-3 shadow-lg sm:-left-8">
+          <div className="hero-fade absolute -left-1 bottom-[6%] z-10 sm:-left-8"><div className="rotate-[-6deg] animate-[float_5s_ease-in-out_infinite] rounded-2xl bg-sun px-4 py-3 shadow-lg">
             <p className="font-label text-[10px] font-bold uppercase tracking-wider">Hook → Script → Edit</p>
-          </div>
-          <div className="hero-fade absolute -right-1 bottom-8 z-10 flex rotate-[5deg] items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-paper shadow-lg sm:-right-6">
+          </div></div>
+          <div className="hero-fade absolute -right-1 top-2 z-10 sm:-right-4"><div className="flex rotate-[5deg] animate-[float_6s_ease-in-out_infinite_-2s] items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-paper shadow-lg">
             <Aperture className="size-4 animate-spin-slow text-aqua" />
             <span className="font-label text-[11px] font-semibold tracking-wide">Shot · Cut · Shipped</span>
-          </div>
+          </div></div>
         </div>
       </div>
 

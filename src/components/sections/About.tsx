@@ -37,7 +37,7 @@ export function About() {
           <h3 className="eyebrow text-muted">Who we work with</h3>
           <ul className="no-scrollbar -mx-4 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-1 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-px sm:overflow-hidden sm:rounded-[28px] sm:bg-line sm:px-0 sm:pb-0 sm:ring-1 sm:ring-line lg:grid-cols-3">
             {audiences.map((a, i) => (
-              <Reveal as="li" key={a.title} delay={(i % 3) * 0.06} className="group relative w-[78%] shrink-0 snap-start overflow-hidden rounded-3xl bg-white p-6 ring-1 ring-line transition-colors duration-500 hover:bg-white sm:w-auto sm:rounded-none sm:bg-paper sm:p-8 sm:ring-0">
+              <Reveal as="li" key={a.title} fade={false} delay={(i % 3) * 0.04} className="group relative w-[78%] shrink-0 snap-start overflow-hidden rounded-3xl bg-white p-6 ring-1 ring-line transition-colors duration-500 hover:bg-white sm:w-auto sm:rounded-none sm:bg-paper sm:p-8 sm:ring-0">
                 <span className="font-label text-xs font-bold text-muted transition-colors group-hover:text-blue">0{i + 1}</span>
                 <p className="mt-4 font-display text-2xl font-extrabold tracking-tight sm:mt-6">{a.title}</p>
                 <p className="mt-3 text-[15px] leading-relaxed text-ink/65">{a.body}</p>
@@ -60,7 +60,7 @@ export function About() {
           </div>
           <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-8 md:mt-12 lg:grid-cols-5">
             {capabilities.map((c, i) => (
-              <Reveal key={c.title} delay={i * 0.07}>
+              <Reveal key={c.title} delay={i * 0.04}>
                 <p className="border-t border-paper/15 pt-4 font-display text-lg font-bold md:pt-5 md:text-xl">{c.title}</p>
                 <ul className="mt-3 space-y-1.5 text-sm text-paper/60 md:mt-4 md:space-y-2 md:text-[15px]">
                   {c.items.map((it) => (

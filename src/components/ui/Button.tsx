@@ -48,7 +48,7 @@ export function Button({
     const r = wrap.current!.getBoundingClientRect();
     const x = e.clientX - r.left - r.width / 2;
     const y = e.clientY - r.top - r.height / 2;
-    gsap.to(wrap.current, { x: x * 0.25, y: y * 0.35, duration: 0.5, ease: "power3.out" });
+    gsap.to(wrap.current, { x: x * 0.15, y: y * 0.2, duration: 0.25, ease: "power3.out", overwrite: true });
   };
   const onEnter = (e: React.PointerEvent) => {
     const r = wrap.current!.getBoundingClientRect();
@@ -57,7 +57,7 @@ export function Button({
   };
   const onLeave = (e: React.PointerEvent) => {
     const r = wrap.current!.getBoundingClientRect();
-    gsap.to(wrap.current, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.4)" });
+    gsap.to(wrap.current, { x: 0, y: 0, duration: 0.35, ease: "power3.out", overwrite: true });
     gsap.to(fill.current, {
       left: e.clientX - r.left,
       top: e.clientY - r.top,

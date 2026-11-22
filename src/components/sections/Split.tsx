@@ -46,7 +46,7 @@ export function Split() {
 
         <div className="mt-10 grid gap-4 md:mt-14 md:gap-5 lg:grid-cols-2">
           {columns.map((c, ci) => (
-            <Reveal key={c.title} delay={ci * 0.12}>
+            <Reveal key={c.title} fade={false} y={32} delay={ci * 0.06}>
               <article
                 className={clsx(
                   "group relative h-full overflow-hidden rounded-[26px] p-6 transition-transform duration-700 ease-out-expo hover:-translate-y-1.5 sm:p-8 md:rounded-[32px] md:p-12",

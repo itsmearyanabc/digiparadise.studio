@@ -39,7 +39,7 @@ export function Services() {
 
         <ul className="mt-10 grid gap-3 md:mt-14 md:gap-4 lg:grid-cols-12">
           {services.map((s, i) => (
-            <Reveal as="li" key={s.slug} delay={(i % 3) * 0.08} className={clsx(spans[i])}>
+            <Reveal as="li" key={s.slug} fade={false} delay={(i % 3) * 0.05} className={clsx(spans[i])}>
               <ServiceCard s={s} wide={i === 0 || i === 5} />
             </Reveal>
           ))}

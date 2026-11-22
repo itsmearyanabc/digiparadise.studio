@@ -23,7 +23,7 @@ type Props = {
  * Masked word-by-word reveal. Text stays real, crawlable text in the HTML:
  * strings are split into words server-side, other nodes (icons, <br/>) pass through as a unit.
  */
-export function SplitReveal({ as: Tag = "h2", children, className, delay = 0, stagger = 0.06, immediate, afterIntro, id }: Props) {
+export function SplitReveal({ as: Tag = "h2", children, className, delay = 0, stagger = 0.045, immediate, afterIntro, id }: Props) {
   const ref = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
@@ -42,11 +42,11 @@ export function SplitReveal({ as: Tag = "h2", children, className, delay = 0, st
             y: 0,
             yPercent: 0,
             rotate: 0,
-            duration: 1.1,
+            duration: 0.85,
             ease: "expo.out",
             stagger,
             delay,
-            scrollTrigger: immediate || afterIntro ? undefined : { trigger: el, start: "top 85%", once: true },
+            scrollTrigger: immediate || afterIntro ? undefined : { trigger: el, start: "top 96%", once: true },
           },
         );
       });

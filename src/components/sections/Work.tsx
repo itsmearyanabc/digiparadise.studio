@@ -99,48 +99,43 @@ export function Work() {
 
 function WorkCard({ w, i }: { w: WorkItem; i: number }) {
   const isVideo = !!w.youtubeId;
-  return (
-    <a
-      href={w.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      data-cursor={isVideo ? "Play" : "View"}
-      className={clsx(
-        "group relative flex aspect-[4/5] flex-col justify-between overflow-hidden rounded-[20px] p-3.5 ring-1 sm:rounded-3xl sm:p-5 ring-paper/10 transition-transform duration-700 ease-out-expo hover:-translate-y-1",
-        isVideo ? "bg-ink-2 text-paper" : tones[i % tones.length],
-      )}
-    >
-      {isVideo && (
-        <>
+  const base =
+    "group relative flex aspect-[4/5] flex-col justify-between overflow-hidden rounded-[20px] p-3 ring-1 ring-paper/10 transition-transform duration-500 ease-out-expo hover:-translate-y-1 sm:rounded-3xl sm:p-4";
+
+  if (isVideo) {
+    // Full 16:9 frame (no awkward crop), title underneath like a video tile
+    return (
+      <a href={w.href} target="_blank" rel="noopener noreferrer" data-cursor="Play" className={clsx(base, "bg-ink-2 text-paper")}>
+        <div className="relative aspect-video overflow-hidden rounded-[14px] bg-ink sm:rounded-2xl">
           <Image
-            src={`https://i.ytimg.com/vi/${w.youtubeId}/hqdefault.jpg`}
-            alt={`${w.name}: video edited by Digiparadise`}
+            src={`https://i.ytimg.com/vi/${w.youtubeId}/hq720.jpg`}
+            alt={`${w.name}: ${w.note?.toLowerCase() ?? "video"} edited by Digiparadise`}
             fill
             sizes="(min-width:1024px) 25vw, (min-width:768px) 33vw, 50vw"
-            className="object-cover opacity-70 transition-all duration-700 ease-out-expo group-hover:scale-110 group-hover:opacity-90"
+            className="object-cover transition-transform duration-700 ease-out-expo group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
-        </>
-      )}
-      {!isVideo && (
-        <Aperture
-          className={clsx(
-            "absolute -bottom-10 -right-10 size-44 opacity-10 transition-transform duration-[1.2s] ease-out-expo group-hover:rotate-[120deg] group-hover:scale-110",
-          )}
-        />
-      )}
-      <div className="relative flex items-center justify-between">
-        <span className="rounded-full bg-current/10 px-2.5 py-1 font-label text-[10px] font-bold uppercase tracking-wider">
-          <span className={clsx(isVideo ? "text-paper" : "")}>{w.category}</span>
-        </span>
-        <span className="grid size-9 place-items-center rounded-full bg-current/10 transition-all duration-500 group-hover:bg-aqua group-hover:text-ink">
-          {isVideo ? (
+          <span className="absolute bottom-2 right-2 grid size-8 place-items-center rounded-full bg-aqua text-ink transition-transform duration-300 group-hover:scale-110 sm:size-9">
             <svg viewBox="0 0 24 24" className="ml-0.5 size-3.5" fill="currentColor" aria-hidden>
               <path d="M7 4.5v15l13-7.5z" />
             </svg>
-          ) : (
-            <ArrowUpRight className="size-4" />
-          )}
+          </span>
+        </div>
+        <div className="px-1 pb-1">
+          <span className="font-label text-[10px] font-bold uppercase tracking-wider text-aqua">{w.note}</span>
+          <p className="mt-1.5 font-display text-xl font-extrabold leading-[1.02] tracking-tight sm:text-2xl md:text-[1.7rem]">{w.name}</p>
+          <p className="mt-1 text-xs text-paper/50 sm:text-sm">{w.category}</p>
+        </div>
+      </a>
+    );
+  }
+
+  return (
+    <a href={w.href} target="_blank" rel="noopener noreferrer" data-cursor="View" className={clsx(base, "sm:p-5", tones[i % tones.length])}>
+      <Aperture className="absolute -bottom-10 -right-10 size-44 opacity-10 transition-transform duration-[1.2s] ease-out-expo group-hover:rotate-[120deg]" />
+      <div className="relative flex items-center justify-between">
+        <span className="rounded-full bg-current/10 px-2.5 py-1 font-label text-[10px] font-bold uppercase tracking-wider">{w.category}</span>
+        <span className="grid size-9 place-items-center rounded-full bg-current/10 transition-colors duration-300 group-hover:bg-aqua group-hover:text-ink">
+          <ArrowUpRight className="size-4" />
         </span>
       </div>
       <div className="relative">

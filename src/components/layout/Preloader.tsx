@@ -33,16 +33,19 @@ export function Preloader() {
             sessionStorage.setItem("dp-intro", "1");
           } catch {}
           setDone(true);
-          (window as any).__dpIntroDone = true;
-      window.dispatchEvent(new Event("dp:intro-done"));
         },
       });
-      tl.from(".pl-mark", { yPercent: 60, opacity: 0, duration: 0.6 })
-        .from(".pl-bowls", { scale: 0, transformOrigin: "50% 60%", duration: 0.5 }, "-=0.3")
-        .from(".pl-count", { opacity: 0, duration: 0.3 }, "<")
-        .to(".pl-count-num", { innerText: 100, snap: { innerText: 1 }, duration: 0.55, ease: "power2.inOut" }, "<")
-        .to(".pl-mark", { yPercent: -40, opacity: 0, duration: 0.35, ease: "power3.in" })
-        .to(el, { clipPath: "inset(0 0 100% 0)", duration: 0.7, ease: "expo.inOut" }, "-=0.2");
+      tl.from(".pl-mark", { yPercent: 50, opacity: 0, duration: 0.45 })
+        .from(".pl-bowls", { scale: 0, transformOrigin: "50% 60%", duration: 0.4 }, "-=0.2")
+        .from(".pl-count", { opacity: 0, duration: 0.2 }, 0)
+        .to(".pl-count-num", { innerText: 100, snap: { innerText: 1 }, duration: 0.6, ease: "power2.inOut" }, 0)
+        .to(".pl-mark", { yPercent: -40, opacity: 0, duration: 0.3, ease: "power3.in" })
+        .call(() => {
+          // Let the hero start animating while the panel is still wiping away
+          (window as any).__dpIntroDone = true;
+          window.dispatchEvent(new Event("dp:intro-done"));
+        })
+        .to(el, { clipPath: "inset(0 0 100% 0)", duration: 0.6, ease: "expo.inOut" }, "<");
     }, el);
     return () => ctx.revert();
   }, []);

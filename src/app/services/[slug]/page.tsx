@@ -81,7 +81,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           <SplitReveal id="what-we-do" className="h2 mt-5">Inside the service.</SplitReveal>
           <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {s.groups.map((g, i) => (
-              <Reveal key={g.title} delay={(i % 3) * 0.07} className="h-full">
+              <Reveal key={g.title} fade={false} delay={(i % 3) * 0.05} className="h-full">
                 <article className="group h-full rounded-[28px] bg-white p-8 ring-1 ring-line transition-all duration-500 ease-out-expo hover:-translate-y-1 hover:shadow-[0_30px_60px_-30px_rgba(10,11,13,.35)]">
                   <div className="flex items-center justify-between">
                     <span className="font-label text-xs font-bold text-muted">0{i + 1}</span>

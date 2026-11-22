@@ -61,6 +61,53 @@ export function Contact() {
           <a href={`mailto:${site.email}`} className="mt-8 inline-block border-b border-paper/25 pb-1 text-xl transition-colors hover:border-aqua hover:text-aqua">
             {site.email}
           </a>
+
+          {/* What happens next: fills the column and lowers the "what am I signing up for" worry */}
+          <div className="mt-12 hidden rounded-[26px] bg-paper/[0.04] p-6 ring-1 ring-paper/10 sm:block">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <p className="eyebrow text-paper/50">What happens next</p>
+              <span className="flex items-center gap-2 whitespace-nowrap rounded-full bg-aqua/10 px-3 py-1 text-[11px] font-semibold text-aqua">
+                <span className="relative flex size-1.5">
+                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-aqua opacity-75" />
+                  <span className="relative inline-flex size-1.5 rounded-full bg-aqua" />
+                </span>
+                Taking new projects
+              </span>
+            </div>
+            <ol className="relative mt-6 space-y-5">
+              <span aria-hidden className="absolute bottom-2 left-[13px] top-2 w-px bg-paper/10">
+                <motion.span
+                  className="absolute inset-x-0 top-0 block bg-gradient-to-b from-aqua to-blue"
+                  initial={{ height: "0%" }}
+                  whileInView={{ height: "100%" }}
+                  viewport={{ once: true, margin: "0px 0px -20% 0px" }}
+                  transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+                />
+              </span>
+              {[
+                ["We read your brief", "Within one working day, by a real strategist."],
+                ["Discovery call", "20 minutes on your goals, audience and what's worked so far."],
+                ["Strategy & scope", "A clear plan, deliverables, timeline and price. No surprises."],
+              ].map(([t, d], i) => (
+                <motion.li
+                  key={t}
+                  className="relative flex gap-4"
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+                  transition={{ duration: 0.5, delay: 0.15 + i * 0.25, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <span className="relative z-10 grid size-7 shrink-0 place-items-center rounded-full bg-ink font-label text-[11px] font-bold text-aqua ring-1 ring-aqua/40">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <p className="font-semibold">{t}</p>
+                    <p className="mt-0.5 text-sm text-paper/55">{d}</p>
+                  </div>
+                </motion.li>
+              ))}
+            </ol>
+          </div>
         </div>
 
         <div className="lg:col-span-7">

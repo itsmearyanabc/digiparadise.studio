@@ -5,6 +5,8 @@ import { motion } from "motion/react";
 import clsx from "clsx";
 import { SplitReveal } from "@/components/motion/SplitReveal";
 import { faqs } from "@/content/site";
+import { Aperture } from "@/components/brand/Logo";
+import { Button } from "@/components/ui/Button";
 
 export function Faq({ items = faqs, title = "Questions, answered." }: { items?: typeof faqs; title?: string }) {
   const [open, setOpen] = useState<number | null>(0);
@@ -16,6 +18,26 @@ export function Faq({ items = faqs, title = "Questions, answered." }: { items?: 
           <SplitReveal id="faq-title" className="h2 mt-5">
             {title}
           </SplitReveal>
+          {/* Fills the tall left column on desktop with a useful next step */}
+          <div className="group relative mt-10 hidden overflow-hidden rounded-[28px] bg-ink p-7 text-paper lg:sticky lg:top-28 lg:block">
+            <Aperture className="absolute -right-8 -top-8 size-36 animate-spin-slow text-paper/[0.06] transition-colors duration-700 group-hover:text-aqua/20" />
+            <span className="relative flex items-center gap-2 text-xs text-paper/60">
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-aqua opacity-70" />
+                <span className="relative inline-flex size-2 rounded-full bg-aqua" />
+              </span>
+              Replies within one working day
+            </span>
+            <p className="relative mt-5 font-display text-2xl font-extrabold leading-tight tracking-tight">
+              Still have a question? Ask a person, not a bot.
+            </p>
+            <p className="relative mt-3 text-sm leading-relaxed text-paper/60">Tell us what you&apos;re working on and we&apos;ll point you to the right service.</p>
+            <div className="relative mt-6">
+              <Button href="/#contact" variant="aqua">
+                Ask us anything
+              </Button>
+            </div>
+          </div>
         </div>
         <ul className="lg:col-span-8">
           {items.map((f, i) => {
