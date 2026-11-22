@@ -9,6 +9,9 @@ import { Aperture } from "@/components/brand/Logo";
 import { Process } from "@/components/sections/Process";
 import { Contact } from "@/components/sections/Contact";
 
+// Only the six known services exist; anything else is a 404 (required for static export).
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
 }

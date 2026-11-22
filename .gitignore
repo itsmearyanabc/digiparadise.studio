@@ -8,3 +8,5 @@ next-env.d.ts
 .vercel
 .claude/
 .next-check
+out
+.wrangler

@@ -1,0 +1,13 @@
+// Cloudflare Workers (static assets) config for digiparadise.studio.
+// `npm run build` writes the static site to ./out; Cloudflare serves it from the edge.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "digiparadise-studio",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./out",
+    // /services/x serves services/x.html; unknown paths get the branded 404 page
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
